@@ -31,6 +31,19 @@ describe("Sidebar Navigation", () => {
         .should("have.attr", "href", "/dashboard/settings");
     });
 
+    it("opens mail client with correct parameters on support icon click", () => {
+      cy.window().then((window) => {
+        cy.stub(window, "open").as("windowOpen");
+      });
+
+      cy.get("img[alt='Support icon']").click();
+
+      cy.get("@windowOpen").should(
+        "have.been.calledWith",
+        "mailto:support@prolog-app.com?subject=Support%20Request%3A",
+      );
+    });
+
     it("is collapsible", () => {
       // collapse navigation
       cy.get("nav").contains("Collapse").click();
