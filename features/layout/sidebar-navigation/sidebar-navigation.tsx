@@ -7,6 +7,8 @@ import { MenuItemButton } from "./menu-item-button";
 import { MenuItemLink } from "./menu-item-link";
 import { Button } from "@features/ui";
 import styles from "./sidebar-navigation.module.scss";
+import useMediaQuery from "hooks/useMediaQuery";
+import { DESKTOP_MEDIA_QUERY } from "@config/constants";
 
 const menuItems = [
   { text: "Projects", iconSrc: "/icons/projects.svg", href: Routes.projects },
@@ -20,6 +22,7 @@ export function SidebarNavigation() {
   const router = useRouter();
   const { isSidebarCollapsed, toggleSidebar } = useContext(NavigationContext);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isDesktopView = useMediaQuery(DESKTOP_MEDIA_QUERY);
 
   const openMailClient = () => {
     const recipient = "support@prolog-app.com";
@@ -46,7 +49,7 @@ export function SidebarNavigation() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={
-              isSidebarCollapsed
+              isSidebarCollapsed && isDesktopView
                 ? "/icons/logo-small.svg"
                 : "/icons/logo-large.svg"
             }
